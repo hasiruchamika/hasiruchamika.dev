@@ -3,121 +3,243 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Image Generator</title>
+  <title>Hasiru Chamika - Portfolio</title>
   <link rel="stylesheet" href="styles.css">
+  <!-- Add Font Awesome for social media icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    integrity="sha512-...your-integrity-hash..."
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
 </head>
 <body>
 
-
+  <html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Me - Hasiru Chamika</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+<body>
   <!-- Header Section -->
   <header class="header">
     <div class="container">
-      <!-- Logo -->
       <div class="logo">
-        <img src="images/logo.jpg" alt="AI Image Generator Logo">
+        <a href="#">Hasiru.Dev</a>
       </div>
+      <nav class="navbar">
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#my-startup">My Startup</a></li>
 
-      <!-- Navigation Menu -->
-      <nav class="nav">
-        <ul>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#how-it-works">How It Works</a></li>
-          <li><a href="#gallery">Gallery</a></li>
-          <li><a href="#pricing">Pricing</a></li>
         </ul>
       </nav>
-
-      <!-- Dark Mode Toggle -->
-      <div class="theme-toggle">
-        <input type="checkbox" id="dark-mode-toggle">
-        <label for="dark-mode-toggle" class="toggle-label">
-          <span class="toggle-icon"></span>
-        </label>
-      </div>
-
-
-      <!-- Call-to-Action Button -->
       <div class="cta">
-        
-        <a href="iot-water-monitoring.html" class="btn">View Project</a>
+        <a href="#footer" class="btn">Contact Me</a>
+
       </div>
     </div>
   </header>
 
 
+
+
+
+
 <!-- Hero Section -->
-<section class="hero">
+<section id="home" class="hero">
   <div class="container">
     <div class="hero-content">
-      <h1>Transform Your Ideas into Stunning Art</h1>
-      <p>Create unique, high-quality images in seconds using cutting-edge AI technology.</p>
-      <!-- Updated "Generate Now" Button -->
-      <a href="generate.html" class="btn">Generate Now</a>
+      <h1>Hi, I'm <span class="highlight">Hasiru Chamika</span></h1>
+      <p>Welcome to the Future of Innovation! Step into a world of creativity, technology, and limitless possibilities. Here, ideas turn into reality, and innovation knows no bounds. Let’s build something amazing together!</p>
+      <div class="hero-buttons">
+        <a href="#portfolio" class="btn">View My Work</a>
+        <a href="files/resume.pdf" target="_blank" class="btn">Download Resume</a>
+      </div>
     </div>
     <div class="hero-image">
-      <img src="images/sample.jpg" alt="AI Generated Art">
+      <img src="images/scl.jpeg" alt="Left Image" class="left-image">
+      <img src="images/bwea.jpg" alt="Center Image" class="center-image">
+      <img src="images/lab.jpeg" alt="Right Image" class="right-image">
     </div>
   </div>
 </section>
 
-  <!-- Features Section -->
-  <section id="features" class="features">
+
+
+
+
+
+  <!-- About Me Section -->
+  <section id="about" class="about">
     <div class="container">
-      <h2>Why Choose Our AI Image Generator?</h2>
-      <div class="feature-grid">
-        <div class="feature-card">
-          <img src="images/icon1.png" alt="Unlimited Creativity">
-          <h3>Unlimited Creativity</h3>
-          <p>Generate images from text prompts with endless possibilities.</p>
+      <div class="about-content">
+        <div class="about-text">
+          <h2>About Me</h2>
+          <p>Hi! I'm Hasiru Chamika, a 21-year-old undergraduate at SLIIT, pursuing my passion for software engineering and technology innovation. I have a strong interest in web and mobile app development, with a focus on e-commerce, gaming, and social platforms.</p>
+          <p>Beyond software, I specialize in Arduino and IoT projects, developing smart systems that bridge the gap between hardware and software. Whether it's automation, robotics, or embedded systems, I love experimenting and creating real-world solutions.</p>
+          <p>I aim to build innovative digital experiences, grow my expertise in cutting-edge technologies, and eventually establish my own tech company, Nexora Systems.</p>
+          <p>Let’s connect and build something amazing!</p>
+          <p>When I'm not coding, you can find me exploring new tech trends, playing video games, or enjoying a good cup of coffee.</p>
+          <div class="hero-buttons">
+            <a href="#contact" class="btn">Let's Connect</a>
+          </div>
         </div>
-        <div class="feature-card">
-          <img src="images/icon2.png" alt="High-Resolution Output">
-          <h3>High-Resolution Output</h3>
-          <p>Download images in stunning 4K quality for any use.</p>
-        </div>
-        <div class="feature-card">
-          <img src="images/icon3.png" alt="Customizable Styles">
-          <h3>Customizable Styles</h3>
-          <p>Choose from various art styles and themes to match your vision.</p>
+        <div class="about-image">
+          <img src="images/photo_2025-02-04_01-15-57.jpg" alt="About Hasiru Chamika">
         </div>
       </div>
     </div>
   </section>
 
-  <!-- How It Works Section -->
-  <section id="how-it-works" class="how-it-works">
+  <!-- Portfolio Section -->
+  <section id="portfolio" class="portfolio">
     <div class="container">
-      <h2>How It Works in 3 Simple Steps</h2>
-      <div class="steps-grid">
-        <div class="step">
-          <span class="step-number">1</span>
-          <h3>Enter a Text Prompt</h3>
-          <p>Describe your idea in a few words (e.g., "A futuristic cityscape at sunset").</p>
+      <h2>My Work</h2>
+      <div class="portfolio-grid">
+        <!-- Project 1 -->
+        <div class="portfolio-item">
+          <img src="images/projects/water.jpg" alt="Project 1">
+          <h3>Real-time IoT-Based Water Tank Monitoring System</h3>
+          <p>A smart system for real-time water level monitoring using IoT.</p>
+          <a href="iot-water-monitoring.html" class="btn">View Project</a>
         </div>
-        <div class="step">
-          <span class="step-number">2</span>
-          <h3>Choose Your Style</h3>
-          <p>Select from realistic, abstract, cartoon, or other art styles.</p>
+        <!-- Project 2 -->
+        <div class="portfolio-item">
+          <img src="images/projects/project2.jpg" alt="Project 2">
+          <h3>E-Commerce Platform</h3>
+          <p>An e-commerce platform built with React and Node.js.</p>
+          <a href="#" class="btn">View Project</a>
         </div>
-        <div class="step">
-          <span class="step-number">3</span>
-          <h3>Generate & Download</h3>
-          <p>Get your image in seconds and download it in high resolution.</p>
+        <!-- Project 3 -->
+        <div class="portfolio-item">
+          <img src="images/projects/project3.jpg" alt="Project 3">
+          <h3>Portfolio Website</h3>
+          <p>A portfolio website designed with modern UI/UX principles.</p>
+          <a href="#" class="btn">View Project</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Footer Section -->
-  <footer class="footer">
+  <!-- Skills Section -->
+  <section id="skills" class="skills">
     <div class="container">
-      <p>&copy; 2024 AI Image Generator. All rights reserved.</p>
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-item">
+          <h3>HTML</h3>
+          <p>Advanced</p>
+        </div>
+        <div class="skill-item">
+          <h3>CSS</h3>
+          <p>Advanced</p>
+        </div>
+        <div class="skill-item">
+          <h3>JavaScript</h3>
+          <p>Intermediate</p>
+        </div>
+        <div class="skill-item">
+          <h3>Embedded Systems</h3>
+          <p>Advanced</p>
+        </div>
+      </div>
     </div>
-  </footer>
+  </section>
 
-  <script src="main.js"></script>
-</body>
-</html>
+  <!-- My Startup Section -->
+  <section id="my-startup" class="startup">
+
+    <div class="container">
+      <div class="startup-content">
+        <div class="startup-text">
+          <h2>My Startup</h2>
+          <p>Nexora Systems - Innovating the Future. Nexora Systems is a cutting-edge technology startup focused on delivering innovative software solutions, IoT systems, and AI-driven applications. Our mission is to empower businesses and individuals with next-gen digital solutions that are scalable, efficient, and future-proof.</p>
+          <div class="hero-buttons">
+            <a href="#contact" class="btn">Work with Me</a>
+          </div>
+        </div>
+        <div class="startup-image">
+          <img src="images/nexora systems.JPG" alt="Nexora Systems">
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <!-- What We Do -->
+<section id="what-we-do" class="what-we-do">
+  <div class="container">
+    <h2>What We Do</h2>
+    <div class="skills-grid">
+      <div class="skill-item">
+        <h3>Software Development</h3>
+        <p>From web and mobile applications to enterprise software solutions.</p>
+      </div>
+      <div class="skill-item">
+        <h3>IoT & Automation</h3>
+        <p>Smart devices, embedded systems, and real-time monitoring solutions.</p>
+      </div>
+      <div class="skill-item">
+        <h3>AI & Machine Learning</h3>
+        <p>Intelligent applications that enhance productivity and decision-making.</p>
+      </div>
+      
+      <div class="skill-item">
+        <h3>Game & App Development</h3>
+        <p>Engaging, immersive, and high-performance digital experiences.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Add a gap before footer -->
+<div style="height: 50px;"></div>
+
+<!-- Footer Section -->
+<footer id="footer" class="footer">
+  <div class="container">
+    <p>Connect with me on social media</p>
+    <div class="social-links">
+      <!-- WhatsApp -->
+      <a href="https://wa.me/+94741906332" target="_blank" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/share/14GFTUQ3vw/" target="_blank" aria-label="Facebook">
+        <i class="fab fa-facebook"></i>
+      </a>
+      <!-- TikTok -->
+      <a href="https://www.tiktok.com/@shaggy2k04?_t=ZS-8tZQoeNp5J2&_r=1" target="_blank" aria-label="TikTok">
+        <i class="fab fa-tiktok"></i>
+      </a>
+      <!-- Instagram -->
+      <a href="https://www.instagram.com/chamika_2k04?utm_source=qr&igsh=MTNwcHh3dDdzOWE0ag==" target="_blank" aria-label="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <!-- LinkedIn -->
+      <a href="https://www.linkedin.com/in/hasiru-chamika-ab0047228" target="_blank" aria-label="LinkedIn">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <!-- GitHub -->
+      <a href="https://www.github.com/your-profile" target="_blank" aria-label="GitHub">
+        <i class="fab fa-github"></i>
+      </a>
+     
+    </div>
+    <p>&copy; 2024 Hasiru Chamika. All Rights Reserved.</p>
+  </div>
+</footer>
+
 
 
 
