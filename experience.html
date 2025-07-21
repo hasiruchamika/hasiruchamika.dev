@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HASIRU | Experience</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap">
+    <style>
+        :root {
+            --neon-purple: #bc13fe;
+            --neon-blue: #0ff0fc;
+            --neon-yellow: #f5d742;
+            --dark-bg: #0a0a12;
+            --glass: rgba(20, 20, 40, 0.7);
+            --glow: 0 0 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--dark-bg);
+            color: white;
+            background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .blur-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: -2;
+        }
+
+        .grid-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            min-height: 100vh;
+        }
+
+        .logo {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            z-index: 100;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: var(--glow) rgba(188, 19, 254, 0.3);
+        }
+
+        nav {
+            width: 100px;
+            height: 100vh;
+            padding: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 10;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        .nav-link.active {
+            color: white;
+        }
+
+        .nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background: var(--neon-purple);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--neon-purple);
+        }
+
+        .nav-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-text {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .nav-dots {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--neon-blue);
+            box-shadow: 0 0 8px var(--neon-blue);
+        }
+
+        main {
+            position: relative;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero {
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--neon-purple), var(--neon-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(188, 19, 254, 0.3);
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, var(--neon-purple), var(--neon-blue));
+            color: black;
+            box-shadow: 0 0 20px rgba(188, 19, 254, 0.5);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(188, 19, 254, 0.8);
+        }
+
+        .experience-timeline {
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+            padding: 1rem 0;
+        }
+
+        .experience-timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--neon-purple), var(--neon-blue));
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .experience-card {
+            position: relative;
+            width: 45%;
+            padding: 1rem;
+            border-radius: 10px;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s ease;
+            z-index: 5;
+            margin: 1rem 0;
+        }
+
+        .experience-card.featured {
+            border: 1px solid var(--neon-yellow);
+            box-shadow: 0 0 20px rgba(245, 215, 66, 0.5);
+        }
+
+        .experience-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--neon-purple), var(--neon-blue));
+            border-radius: 10px 10px 0 0;
+        }
+
+        .experience-card.featured::before {
+            background: var(--neon-yellow);
+        }
+
+        .experience-card:nth-child(odd) {
+            margin-left: 55%;
+        }
+
+        .experience-card:nth-child(even) {
+            margin-right: 55%;
+        }
+
+        .experience-card::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 12px;
+            height: 12px;
+            background: var(--neon-blue);
+            border-radius: 50%;
+            z-index: 6;
+        }
+
+        .experience-card:nth-child(odd)::after {
+            left: -22px;
+        }
+
+        .experience-card:nth-child(even)::after {
+            right: -22px;
+        }
+
+        .experience-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-card-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .experience-card-icons {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .experience-card-icon {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .experience-card-icon.details {
+            background: var(--neon-yellow);
+        }
+
+        .experience-card-icon.expand {
+            background: #2ecc71;
+        }
+
+        .experience-card-icon.close {
+            background: #e74c3c;
+        }
+
+        .experience-card-details {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-card-details span {
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .experience-card-responsibilities {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .experience-card-responsibilities ul {
+            list-style: none;
+            margin-left: 1rem;
+        }
+
+        .experience-card-responsibilities li::before {
+            content: '>';
+            color: var(--neon-blue);
+            margin-right: 0.5rem;
+        }
+
+        .theme-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 100;
+        }
+
+        .theme-pill {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: rgba(20, 20, 40, 0.8);
+            color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .theme-pill.active {
+            background: var(--neon-purple);
+            color: black;
+            box-shadow: 0 0 10px var(--neon-purple);
+        }
+
+        .feature-project {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 0.9rem;
+            background: rgba(20, 20, 40, 0.8);
+            color: var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 15px rgba(11, 240, 252, 0.3);
+            z-index: 100;
+        }
+
+        .feature-project:hover {
+            background: var(--neon-blue);
+            color: black;
+            box-shadow: 0 0 25px rgba(11, 240, 252, 0.6);
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 80px 1fr;
+            }
+
+            nav {
+                width: 80px;
+            }
+
+            h1 {
+                font-size: 3rem;
+            }
+
+            .tagline {
+                font-size: 1.3rem;
+            }
+
+            .experience-card {
+                width: 48%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+                min-height: auto;
+            }
+
+            nav {
+                width: 100%;
+                height: auto;
+                padding: 0.5rem;
+                flex-direction: row;
+                justify-content: space-around;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                position: fixed;
+                top: 60px;
+                left: 0;
+                z-index: 100;
+            }
+
+            .nav-links {
+                flex-direction: row;
+                gap: 1rem;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .nav-link {
+                padding: 0.5rem;
+            }
+
+            .nav-icon {
+                font-size: 1.2rem;
+                margin-bottom: 0.2rem;
+            }
+
+            .nav-text {
+                font-size: 0.7rem;
+            }
+
+            .nav-link.active::before {
+                left: 50%;
+                top: -5px;
+                transform: translateX(-50%);
+                width: 6px;
+                height: 6px;
+            }
+
+            .nav-dots {
+                display: none;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+                top: 10px;
+                left: 10px;
+            }
+
+            .theme-selector {
+                top: 10px;
+                right: 10px;
+                gap: 0.3rem;
+            }
+
+            .theme-pill {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.6rem;
+            }
+
+            main {
+                padding: 1rem;
+                margin-top: 80px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .btn {
+                padding: 0.6rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .experience-timeline::before {
+                left: 20px;
+            }
+
+            .experience-card {
+                width: 90%;
+                max-width: 300px;
+                margin: 1rem auto;
+            }
+
+            .experience-card:nth-child(odd),
+            .experience-card:nth-child(even) {
+                margin-left: 40px;
+                margin-right: auto;
+            }
+
+            .experience-card::after {
+                left: -20px;
+                right: auto;
+            }
+
+            .feature-project {
+                bottom: 10px;
+                right: 10px;
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .nav-links {
+                gap: 0.5rem;
+            }
+
+            .nav-icon {
+                font-size: 1rem;
+            }
+
+            .nav-text {
+                font-size: 0.6rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+
+            .btn {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.8rem;
+            }
+
+            .theme-pill {
+                font-size: 0.6rem;
+                padding: 0.2rem 0.5rem;
+            }
+
+            .experience-card {
+                width: 95%;
+                max-width: 280px;
+                padding: 0.8rem;
+            }
+
+            .experience-card-title {
+                font-size: 0.8rem;
+            }
+
+            .experience-card-details {
+                font-size: 0.7rem;
+            }
+
+            .experience-card-responsibilities {
+                font-size: 0.6rem;
+            }
+
+            .experience-card-icon {
+                width: 10px;
+                height: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="blur-bg"></div>
+<div class="grid-lines"></div>
+
+<div class="logo"><span>H</span>ASIRU</div>
+
+<div class="container">
+    <nav>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-text">Home</span>
+            </a>
+            <a href="projects.html" class="nav-link">
+                <span class="nav-icon">📁</span>
+                <span class="nav-text">Projects</span>
+            </a>
+            <a href="skills.html" class="nav-link">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-text">Skills</span>
+            </a>
+            <a href="experience.html" class="nav-link active">
+                <span class="nav-icon">🧠</span>
+                <span class="nav-text">Experience</span>
+            </a>
+            <a href="#" class="nav-link">
+                <span class="nav-icon">✉️</span>
+                <span class="nav-text">Contact</span>
+            </a>
+        </div>
+
+        <div class="nav-dots">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="hero">
+            <h1>My Experience</h1>
+            <p class="tagline">Professional and educational journey in software engineering and technology</p>
+            <button class="btn btn-primary">View LinkedIn</button>
+        </div>
+
+        <div class="experience-timeline">
+            <div class="experience-card featured">
+                <div class="experience-card-header">
+                    <div class="experience-card-title">Software Engineer Intern</div>
+                    <div class="experience-card-icons">
+                        <div class="experience-card-icon details"></div>
+                        <div class="experience-card-icon expand"></div>
+                        <div class="experience-card-icon close"></div>
+                    </div>
+                </div>
+                <div class="experience-card-details">
+                    <span>TechCorp Solutions</span>
+                    <span>June 2024 - Present</span>
+                </div>
+                <div class="experience-card-responsibilities">
+                    <ul>
+                        <li>Developed IoT-based monitoring system using ESP32 and MQTT</li>
+                        <li>Optimized backend APIs with Node.js and Express</li>
+                        <li>Collaborated on React-based dashboard for real-time data visualization</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="experience-card">
+                <div class="experience-card-header">
+                    <div class="experience-card-title">Web Developer (Freelance)</div>
+                    <div class="experience-card-icons">
+                        <div class="experience-card-icon details"></div>
+                        <div class="experience-card-icon expand"></div>
+                        <div class="experience-card-icon close"></div>
+                    </div>
+                </div>
+                <div class="experience-card-details">
+                    <span>Self-Employed</span>
+                    <span>Jan 2023 - May 2024</span>
+                </div>
+                <div class="experience-card-responsibilities">
+                    <ul>
+                        <li>Built responsive websites using React and Vue</li>
+                        <li>Integrated RESTful APIs and third-party services</li>
+                        <li>Designed UI/UX for small business clients</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="experience-card">
+                <div class="experience-card-header">
+                    <div class="experience-card-title">B.Sc. Computer Science</div>
+                    <div class="experience-card-icons">
+                        <div class="experience-card-icon details"></div>
+                        <div class="experience-card-icon expand"></div>
+                        <div class="experience-card-icon close"></div>
+                    </div>
+                </div>
+                <div class="experience-card-details">
+                    <span>Tech University</span>
+                    <span>Aug 2020 - May 2024</span>
+                </div>
+                <div class="experience-card-responsibilities">
+                    <ul>
+                        <li>Specialized in embedded systems and software engineering</li>
+                        <li>Completed capstone project on smart home automation</li>
+                        <li>Contributed to open-source IoT projects</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="experience-card">
+                <div class="experience-card-header">
+                    <div class="experience-card-title">Mobile App Developer Intern</div>
+                    <div class="experience-card-icons">
+                        <div class="experience-card-icon details"></div>
+                        <div class="experience-card-icon expand"></div>
+                        <div class="experience-card-icon close"></div>
+                    </div>
+                </div>
+                <div class="experience-card-details">
+                    <span>Mobile Innovations Ltd.</span>
+                    <span>June 2023 - Aug 2023</span>
+                </div>
+                <div class="experience-card-responsibilities">
+                    <ul>
+                        <li>Developed Flutter-based mobile app for inventory management</li>
+                        <li>Implemented push notifications and offline storage</li>
+                        <li>Assisted in app deployment to Google Play Store</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<div class="theme-selector">
+    <div class="theme-pill">Progiclad</div>
+    <div class="theme-pill">Aolix</div>
+    <div class="theme-pill active">Foxaloe</div>
+</div>
+
+<button class="feature-project">Featured Experience</button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Navigation active state
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+
+        // Dot navigation
+        document.querySelectorAll('.dot').forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
+                dot.classList.add('active');
+                // Scroll to experience section (placeholder)
+                document.querySelector('.experience-timeline').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Theme selector
+        document.querySelectorAll('.theme-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                document.querySelectorAll('.theme-pill').forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                // Here you would typically change the theme
+            });
+        });
+
+        // Experience card interactions
+        document.querySelectorAll('.experience-card-icon.close').forEach(icon => {
+            icon.addEventListener('click', (e) => {
+                e.stopPropagation();
+                icon.closest('.experience-card').style.opacity = '0';
+                setTimeout(() => {
+                    icon.closest('.experience-card').style.display = 'none';
+                }, 300);
+            });
+        });
+
+        document.querySelectorAll('.experience-card-icon.expand').forEach(icon => {
+            icon.addEventListener('click', (e) => {
+                e.stopPropagation();
+                alert('This would expand the experience details!');
+            });
+        });
+
+        document.querySelectorAll('.experience-card-icon.details').forEach(icon => {
+            icon.addEventListener('click', (e) => {
+                e.stopPropagation();
+                alert('This would show detailed experience information!');
+            });
+        });
+
+        // Feature experience button
+        document.querySelector('.feature-project').addEventListener('click', () => {
+            alert('This would highlight featured experience!');
+        });
+
+        // View LinkedIn button
+        document.querySelector('.btn-primary').addEventListener('click', () => {
+            window.open('https://www.linkedin.com/', '_blank');
+        });
+    });
+</script>
+</body>
+</html>

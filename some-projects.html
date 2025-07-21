@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HASIRU | Projects</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap">
+    <style>
+        :root {
+            --neon-purple: #bc13fe;
+            --neon-blue: #0ff0fc;
+            --neon-yellow: #f5d742;
+            --dark-bg: #0a0a12;
+            --glass: rgba(20, 20, 40, 0.7);
+            --glow: 0 0 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--dark-bg);
+            color: white;
+            background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .blur-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: -2;
+        }
+
+        .grid-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            min-height: 100vh;
+        }
+
+        .logo {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            z-index: 100;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: var(--glow) rgba(188, 19, 254, 0.3);
+        }
+
+        nav {
+            width: 100px;
+            height: 100vh;
+            padding: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 10;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        .nav-link.active {
+            color: white;
+        }
+
+        .nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background: var(--neon-purple);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--neon-purple);
+        }
+
+        .nav-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-text {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .nav-dots {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--neon-blue);
+            box-shadow: 0 0 8px var(--neon-blue);
+        }
+
+        main {
+            position: relative;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero {
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--neon-purple), var(--neon-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(188, 19, 254, 0.3);
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, var(--neon-purple), var(--neon-blue));
+            color: black;
+            box-shadow: 0 0 20px rgba(188, 19, 254, 0.5);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(188, 19, 254, 0.8);
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+            position: relative;
+        }
+
+        .project-card {
+            position: relative;
+            padding: 1rem;
+            border-radius: 10px;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s ease;
+            z-index: 5;
+        }
+
+        .project-card.featured {
+            border: 1px solid var(--neon-yellow);
+            box-shadow: 0 0 20px rgba(245, 215, 66, 0.5);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--neon-purple), var(--neon-blue));
+            border-radius: 10px 10px 0 0;
+        }
+
+        .project-card.featured::before {
+            background: var(--neon-yellow);
+        }
+
+        .project-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .project-card-icons {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .project-card-icon {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .project-card-icon.minimize {
+            background: var(--neon-yellow);
+        }
+
+        .project-card-icon.maximize {
+            background: #2ecc71;
+        }
+
+        .project-card-icon.close {
+            background: #e74c3c;
+        }
+
+        .project-card-tech {
+            display: flex;
+            gap: 0.3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .tech-tag {
+            font-size: 0.6rem;
+            padding: 0.2rem 0.4rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .project-card-progress {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--neon-purple), var(--neon-blue));
+        }
+
+        .project-card.featured .progress-bar {
+            background: var(--neon-yellow);
+        }
+
+        .theme-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 100;
+        }
+
+        .theme-pill {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: rgba(20, 20, 40, 0.8);
+            color: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .theme-pill.active {
+            background: var(--neon-purple);
+            color: black;
+            box-shadow: 0 0 10px var(--neon-purple);
+        }
+
+        .feature-project {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 0.9rem;
+            background: rgba(20, 20, 40, 0.8);
+            color: var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 15px rgba(11, 240, 252, 0.3);
+            z-index: 100;
+        }
+
+        .feature-project:hover {
+            background: var(--neon-blue);
+            color: black;
+            box-shadow: 0 0 25px rgba(11, 240, 252, 0.6);
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 80px 1fr;
+            }
+
+            nav {
+                width: 80px;
+            }
+
+            h1 {
+                font-size: 3rem;
+            }
+
+            .tagline {
+                font-size: 1.3rem;
+            }
+
+            .project-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+                min-height: auto;
+            }
+
+            nav {
+                width: 100%;
+                height: auto;
+                padding: 0.5rem;
+                flex-direction: row;
+                justify-content: space-around;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                position: fixed;
+                top: 60px;
+                left: 0;
+                z-index: 100;
+            }
+
+            .nav-links {
+                flex-direction: row;
+                gap: 1rem;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .nav-link {
+                padding: 0.5rem;
+            }
+
+            .nav-icon {
+                font-size: 1.2rem;
+                margin-bottom: 0.2rem;
+            }
+
+            .nav-text {
+                font-size: 0.7rem;
+            }
+
+            .nav-link.active::before {
+                left: 50%;
+                top: -5px;
+                transform: translateX(-50%);
+                width: 6px;
+                height: 6px;
+            }
+
+            .nav-dots {
+                display: none;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+                top: 10px;
+                left: 10px;
+            }
+
+            .theme-selector {
+                top: 10px;
+                right: 10px;
+                gap: 0.3rem;
+            }
+
+            .theme-pill {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.6rem;
+            }
+
+            main {
+                padding: 1rem;
+                margin-top: 80px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .btn {
+                padding: 0.6rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .project-card {
+                width: 90%;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .feature-project {
+                bottom: 10px;
+                right: 10px;
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .nav-links {
+                gap: 0.5rem;
+            }
+
+            .nav-icon {
+                font-size: 1rem;
+            }
+
+            .nav-text {
+                font-size: 0.6rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+
+            .btn {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.8rem;
+            }
+
+            .theme-pill {
+                font-size: 0.6rem;
+                padding: 0.2rem 0.5rem;
+            }
+
+            .project-card {
+                width: 95%;
+                max-width: 280px;
+                padding: 0.8rem;
+            }
+
+            .project-card-title {
+                font-size: 0.8rem;
+            }
+
+            .tech-tag {
+                font-size: 0.5rem;
+            }
+
+            .project-card-icon {
+                width: 10px;
+                height: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="blur-bg"></div>
+<div class="grid-lines"></div>
+
+<div class="logo"><span>H</span>ASIRU</div>
+
+<div class="container">
+    <nav>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-text">Home</span>
+            </a>
+            <a href="projects.html" class="nav-link active">
+                <span class="nav-icon">📁</span>
+                <span class="nav-text">Projects</span>
+            </a>
+            <a href="skills.html" class="nav-link">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-text">Skills</span>
+            </a>
+            <a href="experience.html" class="nav-link">
+                <span class="nav-icon">🧠</span>
+                <span class="nav-text">Experience</span>
+            </a>
+            <a href="contact.html" class="nav-link">
+                <span class="nav-icon">✉️</span>
+                <span class="nav-text">Contact</span>
+            </a>
+        </div>
+
+        <div class="nav-dots">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="hero">
+            <h1>My Projects</h1>
+            <p class="tagline">Explore my work in web, mobile, IoT, and embedded systems</p>
+            <button class="btn btn-primary">View GitHub</button>
+        </div>
+
+        <div class="project-grid">
+            <div class="project-card featured">
+                <div class="project-card-header">
+                    <div class="project-card-title">Smart Home IoT Hub</div>
+                    <div class="project-card-icons">
+                        <div class="project-card-icon minimize"></div>
+                        <div class="project-card-icon maximize"></div>
+                        <div class="project-card-icon close"></div>
+                    </div>
+                </div>
+                <div class="project-card-tech">
+                    <span class="tech-tag">ESP32</span>
+                    <span class="tech-tag">MQTT</span>
+                    <span class="tech-tag">Node-RED</span>
+                </div>
+                <div class="project-card-progress">
+                    <div class="progress-bar" style="width: 90%"></div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-card-header">
+                    <div class="project-card-title">Neon Dashboard</div>
+                    <div class="project-card-icons">
+                        <div class="project-card-icon minimize"></div>
+                        <div class="project-card-icon maximize"></div>
+                        <div class="project-card-icon close"></div>
+                    </div>
+                </div>
+                <div class="project-card-tech">
+                    <span class="tech-tag">Vue</span>
+                    <span class="tech-tag">D3</span>
+                </div>
+                <div class="project-card-progress">
+                    <div class="progress-bar" style="width: 70%"></div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-card-header">
+                    <div class="project-card-title">AR Interface</div>
+                    <div class="project-card-icons">
+                        <div class="project-card-icon minimize"></div>
+                        <div class="project-card-icon maximize"></div>
+                        <div class="project-card-icon close"></div>
+                    </div>
+                </div>
+                <div class="project-card-tech">
+                    <span class="tech-tag">ARCore</span>
+                    <span class="tech-tag">Unity</span>
+                </div>
+                <div class="project-card-progress">
+                    <div class="progress-bar" style="width: 60%"></div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-card-header">
+                    <div class="project-card-title">Blockchain App</div>
+                    <div class="project-card-icons">
+                        <div class="project-card-icon minimize"></div>
+                        <div class="project-card-icon maximize"></div>
+                        <div class="project-card-icon close"></div>
+                    </div>
+                </div>
+                <div class="project-card-tech">
+                    <span class="tech-tag">Solidity</span>
+                    <span class="tech-tag">Web3</span>
+                </div>
+                <div class="project-card-progress">
+                    <div class="progress-bar" style="width: 80%"></div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-card-header">
+                    <div class="project-card-title">AI Assistant</div>
+                    <div class="project-card-icons">
+                        <div class="project-card-icon minimize"></div>
+                        <div class="project-card-icon maximize"></div>
+                        <div class="project-card-icon close"></div>
+                    </div>
+                </div>
+                <div class="project-card-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">NLP</span>
+                </div>
+                <div class="project-card-progress">
+                    <div class="progress-bar" style="width: 75%"></div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-card-header">
+                    <div class="project-card-title">Mobile Game</div>
+                    <div class="project-card-icons">
+                        <div class="project-card-icon minimize"></div>
+                        <div class="project-card-icon maximize"></div>
+                        <div class="project-card-icon close"></div>
+                    </div>
+                </div>
+                <div class="project-card-tech">
+                    <span class="tech-tag">Swift</span>
+                    <span class="tech-tag">SpriteKit</span>
+                </div>
+                <div class="project-card-progress">
+                    <div class="progress-bar" style="width: 65%"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<div class="theme-selector">
+    <div class="theme-pill">Progiclad</div>
+    <div class="theme-pill">Aolix</div>
+    <div class="theme-pill active">Foxaloe</div>
+</div>
+
+<button class="feature-project">Featured Projects</button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Navigation active state
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+
+        // Dot navigation
+        document.querySelectorAll('.dot').forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
+                dot.classList.add('active');
+                // Scroll to project section (placeholder)
+                document.querySelector('.project-grid').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Theme selector
+        document.querySelectorAll('.theme-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                document.querySelectorAll('.theme-pill').forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                // Here you would typically change the theme
+            });
+        });
+
+        // Project card interactions
+        document.querySelectorAll('.project-card-icon.close').forEach(icon => {
+            icon.addEventListener('click', (e) => {
+                e.stopPropagation();
+                icon.closest('.project-card').style.opacity = '0';
+                setTimeout(() => {
+                    icon.closest('.project-card').style.display = 'none';
+                }, 300);
+            });
+        });
+
+        document.querySelectorAll('.project-card-icon.maximize').forEach(icon => {
+            icon.addEventListener('click', (e) => {
+                e.stopPropagation();
+                alert('This would open a detailed project view!');
+            });
+        });
+
+        // Feature project button
+        document.querySelector('.feature-project').addEventListener('click', () => {
+            alert('This would highlight featured projects!');
+        });
+
+        // View GitHub button
+        document.querySelector('.btn-primary').addEventListener('click', () => {
+            window.open('https://github.com/', '_blank');
+        });
+    });
+</script>
+</body>
+</html>
