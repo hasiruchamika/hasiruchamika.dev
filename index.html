@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HASIRU | Cyberpunk Developer</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap">
-  <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
   <style>
     :root {
       --neon-purple: #bc13fe;
@@ -29,29 +27,6 @@
       color: white;
       min-height: 100vh;
       overflow: hidden;
-    }
-
-    .blur-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-      z-index: -2;
-    }
-
-    .grid-lines {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 50px 50px;
-      z-index: -1;
-      opacity: 0.5;
     }
 
     .container {
@@ -156,6 +131,7 @@
       background: rgba(255, 255, 255, 0.3);
       border-radius: 50%;
       transition: all 0.3s ease;
+      cursor: pointer;
     }
 
     .dot.active {
@@ -178,12 +154,12 @@
       margin: 0 auto;
     }
 
-    #avatar-3d {
+    .profile-image {
       width: 100%;
       height: 100%;
+      object-fit: cover;
       border-radius: 20px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 2px solid var(--neon-purple);
       box-shadow: 0 0 30px rgba(188, 19, 254, 0.3), 0 0 60px rgba(11, 240, 252, 0.2);
       background: rgba(10, 10, 20, 0.5);
     }
@@ -204,6 +180,13 @@
       cursor: pointer;
       z-index: 10;
       border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .camera-icon:hover {
+      background: var(--neon-blue);
+      color: black;
+      box-shadow: 0 0 10px var(--neon-blue);
     }
 
     .hero {
@@ -378,6 +361,24 @@
       background: var(--neon-yellow);
     }
 
+    .project-card.minimized {
+      height: 40px;
+      overflow: hidden;
+    }
+
+    .project-card.minimized .project-card-tech,
+    .project-card.minimized .project-card-progress {
+      opacity: 0;
+      height: 0;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .project-card.highlighted {
+      box-shadow: 0 0 30px rgba(245, 215, 66, 0.7);
+      transform: scale(1.05);
+    }
+
     .card-1 {
       top: 10%;
       left: 5%;
@@ -483,12 +484,26 @@
       box-shadow: 0 0 25px rgba(11, 240, 252, 0.6);
     }
 
-    .project-card.minimized .project-card-tech,
-    .project-card.minimized .project-card-progress {
-      opacity: 0;
-      height: 0;
-      margin: 0;
-      overflow: hidden;
+    .restore-cards {
+      position: fixed;
+      bottom: 60px;
+      right: 20px;
+      padding: 0.6rem 1rem;
+      border-radius: 50px;
+      background: rgba(20, 20, 40, 0.8);
+      color: var(--neon-yellow);
+      border: 1px solid var(--neon-yellow);
+      z-index: 100;
+      font-size: 0.8rem;
+      font-family: 'Rajdhani', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .restore-cards:hover {
+      background: var(--neon-yellow);
+      color: black;
+      box-shadow: 0 0 15px rgba(245, 215, 66, 0.6);
     }
 
     @media (max-width: 1024px) {
@@ -724,63 +739,60 @@
   </style>
 </head>
 <body>
-<div class="blur-bg"></div>
-<div class="grid-lines"></div>
-
 <div class="logo"><span>H</span>ASIRU</div>
 
 <div class="container">
   <nav>
     <div class="nav-links">
-      <a href="index.html" class="nav-link active">
+      <a href="index.html" class="nav-link active" aria-label="Home Page">
         <span class="nav-icon">🏠</span>
         <span class="nav-text">Home</span>
       </a>
-      <a href="projects.html" class="nav-link">
+      <a href="projects.html" class="nav-link" aria-label="View Projects">
         <span class="nav-icon">📁</span>
         <span class="nav-text">Projects</span>
       </a>
-      <a href="skills.html" class="nav-link">
+      <a href="skills.html" class="nav-link" aria-label="View Skills">
         <span class="nav-icon">⚙️</span>
         <span class="nav-text">Skills</span>
       </a>
-      <a href="experience.html" class="nav-link">
+      <a href="experience.html" class="nav-link" aria-label="View Experience">
         <span class="nav-icon">🧠</span>
         <span class="nav-text">Experience</span>
       </a>
-      <a href="contact.html" class="nav-link">
+      <a href="contact.html" class="nav-link" aria-label="Contact Me">
         <span class="nav-icon">✉️</span>
         <span class="nav-text">Contact</span>
       </a>
     </div>
 
     <div class="nav-dots">
-      <div class="dot active"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
+      <div class="dot active" aria-label="Scroll to Main Section"></div>
+      <div class="dot" aria-label="Scroll to Section 2"></div>
+      <div class="dot" aria-label="Scroll to Section 3"></div>
+      <div class="dot" aria-label="Scroll to Section 4"></div>
     </div>
   </nav>
 
   <main>
     <div class="avatar-container">
-      <div id="avatar-3d"></div>
-      <div class="camera-icon">📷</div>
+      <img src="./images/my.jpg" class="profile-image" alt="Hasiru's Profile Picture">
+      <div class="camera-icon" aria-label="Change Profile Picture">📷</div>
     </div>
 
     <div class="hero">
       <h1>Hello, I'm Hasiru</h1>
       <p class="tagline">Aspiring Software Engineer | Web & Mobile Developer | IoT & Embedded Systems Enthusiast</p>
-      <button class="btn btn-primary">Let's Build</button>
+      <button class="btn btn-primary" aria-label="Go to Contact Page">Let's Build</button>
     </div>
 
-    <div class="project-card card-special">
+    <div class="project-card card-special" data-project="Featured Project">
       <div class="project-card-header">
         <div class="project-card-title">Featured Project</div>
         <div class="project-card-icons">
-          <div class="project-card-icon minimize"></div>
-          <div class="project-card-icon maximize" data-project="Featured Project"></div>
-          <div class="project-card-icon close"></div>
+          <div class="project-card-icon minimize" aria-label="Minimize Featured Project"></div>
+          <div class="project-card-icon maximize" data-project="Featured Project" aria-label="Maximize Featured Project"></div>
+          <div class="project-card-icon close" aria-label="Close Featured Project"></div>
         </div>
       </div>
       <div class="project-card-tech">
@@ -793,13 +805,13 @@
       </div>
     </div>
 
-    <div class="project-card card-1">
+    <div class="project-card card-1" data-project="Neon Dashboard">
       <div class="project-card-header">
         <div class="project-card-title">Neon Dashboard</div>
         <div class="project-card-icons">
-          <div class="project-card-icon minimize"></div>
-          <div class="project-card-icon maximize" data-project="Neon Dashboard"></div>
-          <div class="project-card-icon close"></div>
+          <div class="project-card-icon minimize" aria-label="Minimize Neon Dashboard"></div>
+          <div class="project-card-icon maximize" data-project="Neon Dashboard" aria-label="Maximize Neon Dashboard"></div>
+          <div class="project-card-icon close" aria-label="Close Neon Dashboard"></div>
         </div>
       </div>
       <div class="project-card-tech">
@@ -811,13 +823,13 @@
       </div>
     </div>
 
-    <div class="project-card card-2">
+    <div class="project-card card-2" data-project="AR Interface">
       <div class="project-card-header">
         <div class="project-card-title">AR Interface</div>
         <div class="project-card-icons">
-          <div class="project-card-icon minimize"></div>
-          <div class="project-card-icon maximize" data-project="AR Interface"></div>
-          <div class="project-card-icon close"></div>
+          <div class="project-card-icon minimize" aria-label="Minimize AR Interface"></div>
+          <div class="project-card-icon maximize" data-project="AR Interface" aria-label="Maximize AR Interface"></div>
+          <div class="project-card-icon close" aria-label="Close AR Interface"></div>
         </div>
       </div>
       <div class="project-card-tech">
@@ -829,13 +841,13 @@
       </div>
     </div>
 
-    <div class="project-card card-3">
+    <div class="project-card card-3" data-project="Blockchain App">
       <div class="project-card-header">
         <div class="project-card-title">Blockchain App</div>
         <div class="project-card-icons">
-          <div class="project-card-icon minimize"></div>
-          <div class="project-card-icon maximize" data-project="Blockchain App"></div>
-          <div class="project-card-icon close"></div>
+          <div class="project-card-icon minimize" aria-label="Minimize Blockchain App"></div>
+          <div class="project-card-icon maximize" data-project="Blockchain App" aria-label="Maximize Blockchain App"></div>
+          <div class="project-card-icon close" aria-label="Close Blockchain App"></div>
         </div>
       </div>
       <div class="project-card-tech">
@@ -847,13 +859,13 @@
       </div>
     </div>
 
-    <div class="project-card card-4">
+    <div class="project-card card-4" data-project="AI Assistant">
       <div class="project-card-header">
         <div class="project-card-title">AI Assistant</div>
         <div class="project-card-icons">
-          <div class="project-card-icon minimize"></div>
-          <div class="project-card-icon maximize" data-project="AI Assistant"></div>
-          <div class="project-card-icon close"></div>
+          <div class="project-card-icon minimize" aria-label="Minimize AI Assistant"></div>
+          <div class="project-card-icon maximize" data-project="AI Assistant" aria-label="Maximize AI Assistant"></div>
+          <div class="project-card-icon close" aria-label="Close AI Assistant"></div>
         </div>
       </div>
       <div class="project-card-tech">
@@ -865,13 +877,13 @@
       </div>
     </div>
 
-    <div class="project-card card-5">
+    <div class="project-card card-5" data-project="Mobile Game">
       <div class="project-card-header">
         <div class="project-card-title">Mobile Game</div>
         <div class="project-card-icons">
-          <div class="project-card-icon minimize"></div>
-          <div class="project-card-icon maximize" data-project="Mobile Game"></div>
-          <div class="project-card-icon close"></div>
+          <div class="project-card-icon minimize" aria-label="Minimize Mobile Game"></div>
+          <div class="project-card-icon maximize" data-project="Mobile Game" aria-label="Maximize Mobile Game"></div>
+          <div class="project-card-icon close" aria-label="Close Mobile Game"></div>
         </div>
       </div>
       <div class="project-card-tech">
@@ -886,97 +898,26 @@
 </div>
 
 <div class="theme-selector">
-  <div class="theme-pill">Progiclad</div>
-  <div class="theme-pill">Aolix</div>
-  <div class="theme-pill active">Foxaloe</div>
+  <div class="theme-pill" aria-label="Select Progiclad Theme">Progiclad</div>
+  <div class="theme-pill" aria-label="Select Aolix Theme">Aolix</div>
+  <div class="theme-pill active" aria-label="Select Foxaloe Theme">Foxaloe</div>
 </div>
 
-<button class="feature-project">View Projects</button>
+<button class="feature-project" aria-label="View Projects">View Projects</button>
+<button class="restore-cards" aria-label="Restore All Project Cards">Restore Cards</button>
 
 <script>
-  // Initialize Three.js scene for 3D avatar
-  let scene, camera, renderer, avatar;
-
-  function init3DAvatar() {
-    scene = new THREE.Scene();
-    scene.background = null;
-
-    camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
-    camera.position.z = 2;
-
-    renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(document.getElementById('avatar-3d').offsetWidth, document.getElementById('avatar-3d').offsetHeight);
-    document.getElementById('avatar-3d').appendChild(renderer.domElement);
-
-    const ambientLight = new THREE.AmbientLight(0x404040);
-    scene.add(ambientLight);
-
-    const directionalLight1 = new THREE.DirectionalLight(0xbc13fe, 1);
-    directionalLight1.position.set(1, 1, 1);
-    scene.add(directionalLight1);
-
-    const directionalLight2 = new THREE.DirectionalLight(0x0ff0fc, 1);
-    directionalLight2.position.set(-1, -1, 1);
-    scene.add(directionalLight2);
-
-    const geometry = new THREE.SphereGeometry(0.8, 32, 32);
-    const material = new THREE.MeshPhongMaterial({
-      color: 0x333333,
-      specular: 0xbc13fe,
-      shininess: 100,
-      emissive: 0x111111,
-      emissiveIntensity: 0.5
-    });
-
-    avatar = new THREE.Mesh(geometry, material);
-    scene.add(avatar);
-
-    const eyeGeometry = new THREE.SphereGeometry(0.1, 16, 16);
-    const eyeMaterial = new THREE.MeshBasicMaterial({ color: 0x0ff0fc });
-
-    const leftEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
-    leftEye.position.set(-0.3, 0.1, 0.8);
-    avatar.add(leftEye);
-
-    const rightEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
-    rightEye.position.set(0.3, 0.1, 0.8);
-    avatar.add(rightEye);
-
-    const smileCurve = new THREE.EllipseCurve(0, 0, 0.4, 0.2, 0, Math.PI, false, 0);
-    const smilePoints = smileCurve.getPoints(20);
-    const smileGeometry = new THREE.BufferGeometry().setFromPoints(smilePoints);
-    const smileMaterial = new THREE.LineBasicMaterial({ color: 0x0ff0fc });
-    const smile = new THREE.Line(smileGeometry, smileMaterial);
-    smile.position.set(0, -0.2, 0.8);
-    smile.rotation.x = Math.PI / 8;
-    avatar.add(smile);
-
-    const controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.enableZoom = false;
-    controls.enablePan = false;
-    controls.autoRotate = true;
-    controls.autoRotateSpeed = 1;
-
-    function animate() {
-      requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
-    }
-
-    animate();
-
-    window.addEventListener('resize', () => {
-      camera.aspect = document.getElementById('avatar-3d').offsetWidth / document.getElementById('avatar-3d').offsetHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(document.getElementById('avatar-3d').offsetWidth, document.getElementById('avatar-3d').offsetHeight);
-    });
-  }
-
   document.addEventListener('DOMContentLoaded', () => {
-    init3DAvatar();
-
-    // Navigation active state
+    // Set active navigation link based on current URL
+    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
     document.querySelectorAll('.nav-link').forEach(link => {
+      const linkPath = link.getAttribute('href');
+      if (linkPath === currentPath) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+
       link.addEventListener('click', (e) => {
         e.preventDefault();
         document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
@@ -995,11 +936,36 @@
     });
 
     // Theme selector
+    const themes = {
+      Progiclad: {
+        '--neon-purple': '#ff2e63',
+        '--neon-blue': '#08f7fe',
+        '--neon-yellow': '#f1c40f',
+        '--dark-bg': '#1a1a2e',
+      },
+      Aolix: {
+        '--neon-purple': '#9b59b6',
+        '--neon-blue': '#3498db',
+        '--neon-yellow': '#f1c40f',
+        '--dark-bg': '#162447',
+      },
+      Foxaloe: {
+        '--neon-purple': '#bc13fe',
+        '--neon-blue': '#0ff0fc',
+        '--neon-yellow': '#f5d742',
+        '--dark-bg': '#0a0a12',
+      },
+    };
+
     document.querySelectorAll('.theme-pill').forEach(pill => {
       pill.addEventListener('click', () => {
         document.querySelectorAll('.theme-pill').forEach(p => p.classList.remove('active'));
         pill.classList.add('active');
-        // Placeholder for theme change
+        const theme = pill.textContent;
+        const root = document.documentElement;
+        Object.entries(themes[theme]).forEach(([key, value]) => {
+          root.style.setProperty(key, value);
+        });
       });
     });
 
@@ -1018,8 +984,15 @@
     document.querySelectorAll('.project-card-icon.maximize').forEach(icon => {
       icon.addEventListener('click', (e) => {
         e.stopPropagation();
+        const button = e.target;
+        button.style.opacity = '0.5';
+        button.disabled = true;
         const project = icon.getAttribute('data-project');
-        window.location.href = `projects.html?highlight=${encodeURIComponent(project)}`;
+        setTimeout(() => {
+          window.location.href = `projects.html?highlight=${encodeURIComponent(project)}`;
+          button.style.opacity = '1';
+          button.disabled = false;
+        }, 500);
       });
     });
 
@@ -1031,19 +1004,57 @@
       });
     });
 
+    // Restore cards
+    document.querySelector('.restore-cards').addEventListener('click', () => {
+      const button = document.querySelector('.restore-cards');
+      button.textContent = 'Restoring...';
+      button.disabled = true;
+      setTimeout(() => {
+        document.querySelectorAll('.project-card').forEach(card => {
+          card.style.display = 'block';
+          card.style.opacity = '1';
+          card.classList.remove('minimized');
+          card.classList.remove('highlighted');
+        });
+        button.textContent = 'Restore Cards';
+        button.disabled = false;
+      }, 500);
+    });
+
     // View Projects button
     document.querySelector('.feature-project').addEventListener('click', () => {
-      window.location.href = 'projects.html';
+      const button = document.querySelector('.feature-project');
+      button.textContent = 'Loading...';
+      button.disabled = true;
+      setTimeout(() => {
+        window.location.href = 'projects.html';
+        button.textContent = 'View Projects';
+        button.disabled = false;
+      }, 500);
     });
 
     // Let's Build button
     document.querySelector('.btn-primary').addEventListener('click', () => {
-      window.location.href = 'contact.html';
+      const button = document.querySelector('.btn-primary');
+      button.textContent = 'Loading...';
+      button.disabled = true;
+      setTimeout(() => {
+        window.location.href = 'contact.html';
+        button.textContent = 'Let\'s Build';
+        button.disabled = false;
+      }, 500);
     });
 
     // Camera icon
     document.querySelector('.camera-icon').addEventListener('click', () => {
-      alert('This would open avatar customization options!');
+      const button = document.querySelector('.camera-icon');
+      button.style.opacity = '0.5';
+      button.disabled = true;
+      setTimeout(() => {
+        alert('This would open profile picture customization options!');
+        button.style.opacity = '1';
+        button.disabled = false;
+      }, 500);
     });
   });
 </script>
