@@ -1,3 +1,9 @@
+<?php
+session_start();
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -614,6 +620,16 @@
                 height: 10px;
             }
         }
+
+        .success {
+            color: #2ecc71;
+            font-size: 0.9rem;
+        }
+
+        .error {
+            color: #e74c3c;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
@@ -638,7 +654,7 @@
                 <span class="nav-icon">🧠</span>
                 <span class="nav-text">Experience</span>
             </a>
-            <a href="contact.html" class="nav-link active" aria-label="Contact Me">
+            <a href="contact.php" class="nav-link active" aria-label="Contact Me">
                 <span class="nav-icon">✉️</span>
                 <span class="nav-text">Contact</span>
             </a>
@@ -656,7 +672,7 @@
         <div class="hero">
             <h1>Contact Me</h1>
             <p class="tagline">Get in touch for collaborations, projects, or inquiries</p>
-            <a href="#" class="btn btn-primary" id="send-message" aria-label="Send Message">Send Message</a>
+            <button class="btn btn-primary" aria-label="Send Message">Send Message</button>
         </div>
 
         <div class="contact-container">
@@ -669,7 +685,7 @@
                         <div class="contact-form-icon close" aria-label="Close Form"></div>
                     </div>
                 </div>
-                <form action="hasiruchamika2004@gmail.com" method="POST" enctype="text/plain">
+                <form id="contact-form" action="send-message.php" method="POST">
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" placeholder="Your Name" required>
@@ -686,8 +702,13 @@
                         <label for="message">Message</label>
                         <textarea id="message" name="message" placeholder="Your Message" required></textarea>
                     </div>
-                    <button type="submit" style="display:none;" id="submit-form"></button>
+                    <div class="form-group honeypot">
+                        <label for="website">Leave this blank</label>
+                        <input type="text" id="website" name="website">
+                    </div>
+                    <input type="hidden" id="csrf_token" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                 </form>
+                <div id="form-message"></div> <!-- Feedback message area -->
             </div>
 
             <div class="social-links">
@@ -709,19 +730,188 @@
 <button class="feature-project" aria-label="Connect Now">Connect Now</button>
 <button class="restore-form" aria-label="Restore Form">Restore Form</button>
 
-<style>
-    .contact-form-icon.submit:hover {
-        background: #27ae60; /* Darker green on hover */
-    }
-    .contact-form-icon.clear:hover {
-        background: #f1c40f; /* Darker yellow on hover */
-    }
-    .contact-form-icon.close:hover {
-        background: #c0392b; /* Darker red on hover */
-    }
-</style>
-</head>
-<body>
-<!-- Rest of your HTML remains the same, but interactivity is limited without JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Set active navigation link based on current URL
+    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-link').forEach(link => {
+        const linkPath = link.getAttribute('href');
+        if (linkPath === currentPath) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
+
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+            window.location.href = link.href;
+        });
+    });
+
+    // Dot navigation
+    document.querySelectorAll('.dot').forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
+            dot.classList.add('active');
+            document.querySelector('.contact-container').scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+
+    // Theme selector
+    const themes = {
+        Progiclad: {
+            '--neon-purple': '#ff2e63',
+            '--neon-blue': '#08f7fe',
+            '--neon-yellow': '#f1c40f',
+            '--dark-bg': '#1a1a2e',
+        },
+        Aolix: {
+            '--neon-purple': '#9b59b6',
+            '--neon-blue': '#3498db',
+            '--neon-yellow': '#f1c40f',
+            '--dark-bg': '#162447',
+        },
+        Foxaloe: {
+            '--neon-purple': '#bc13fe',
+            '--neon-blue': '#0ff0fc',
+            '--neon-yellow': '#f5d742',
+            '--dark-bg': '#0a0a12',
+        },
+    };
+
+    document.querySelectorAll('.theme-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+            document.querySelectorAll('.theme-pill').forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+            const theme = pill.textContent;
+            const root = document.documentElement;
+            Object.entries(themes[theme]).forEach(([key, value]) => {
+                root.style.setProperty(key, value);
+            });
+        });
+    });
+
+    // Contact form interactions
+    const form = document.querySelector('.contact-form');
+    const contactForm = document.querySelector('#contact-form');
+    const nameInput = document.querySelector('#name');
+    const emailInput = document.querySelector('#email');
+    const phoneInput = document.querySelector('#phone');
+    const messageInput = document.querySelector('#message');
+    const formMessage = document.getElementById('form-message');
+    const csrfToken = document.querySelector('#csrf_token').value;
+
+    const submitForm = async () => {
+        const data = {
+            name: nameInput.value,
+            email: emailInput.value,
+            phone: phoneInput.value,
+            message: messageInput.value,
+            csrf_token: csrfToken
+        };
+
+        try {
+            const response = await fetch('send-message.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams(data).toString()
+            });
+
+            const result = await response.json();
+            formMessage.innerHTML = `<p class="${result.status === 'success' ? 'success' : 'error'}">${result.message}</p>`;
+
+            if (result.status === 'success') {
+                nameInput.value = '';
+                emailInput.value = '';
+                phoneInput.value = '';
+                messageInput.value = '';
+            }
+        } catch (error) {
+            formMessage.innerHTML = '<p class="error">An error occurred. Please try again later.</p>';
+        }
+    };
+
+    document.querySelector('.contact-form-icon.close').addEventListener('click', (e) => {
+        e.stopPropagation();
+        form.style.opacity = '0';
+        setTimeout(() => {
+            form.style.display = 'none';
+        }, 300);
+    });
+
+    document.querySelector('.contact-form-icon.clear').addEventListener('click', (e) => {
+        e.stopPropagation();
+        const button = e.target;
+        button.style.opacity = '0.5';
+        button.disabled = true;
+        setTimeout(() => {
+            nameInput.value = '';
+            emailInput.value = '';
+            phoneInput.value = '';
+            messageInput.value = '';
+            button.style.opacity = '1';
+            button.disabled = false;
+        }, 300);
+    });
+
+    document.querySelector('.contact-form-icon.submit').addEventListener('click', (e) => {
+        e.stopPropagation();
+        const button = e.target;
+        button.style.opacity = '0.5';
+        button.disabled = true;
+        setTimeout(() => {
+            submitForm();
+            button.style.opacity = '1';
+            button.disabled = false;
+        }, 500);
+    });
+
+    // Send Message button
+    document.querySelector('.btn-primary').addEventListener('click', () => {
+        const button = document.querySelector('.btn-primary');
+        button.textContent = 'Sending...';
+        button.disabled = true;
+        setTimeout(() => {
+            submitForm();
+            button.textContent = 'Send Message';
+            button.disabled = false;
+        }, 500);
+    });
+
+    // Connect Now button
+    document.querySelector('.feature-project').addEventListener('click', () => {
+        const button = document.querySelector('.feature-project');
+        button.textContent = 'Loading...';
+        button.disabled = true;
+        setTimeout(() => {
+            form.style.display = 'block';
+            form.style.opacity = '1';
+            form.classList.remove('minimized');
+            form.scrollIntoView({ behavior: 'smooth' });
+            button.textContent = 'Connect Now';
+            button.disabled = false;
+        }, 500);
+    });
+
+    // Restore Form button
+    document.querySelector('.restore-form').addEventListener('click', () => {
+        const button = document.querySelector('.restore-form');
+        button.textContent = 'Restoring...';
+        button.disabled = true;
+        setTimeout(() => {
+            form.style.display = 'block';
+            form.style.opacity = '1';
+            form.classList.remove('minimized');
+            form.scrollIntoView({ behavior: 'smooth' });
+            button.textContent = 'Restore Form';
+            button.disabled = false;
+        }, 500);
+    });
+});
+</script>
 </body>
 </html>
