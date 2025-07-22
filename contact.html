@@ -25,33 +25,8 @@
             font-family: 'Rajdhani', sans-serif;
             background-color: var(--dark-bg);
             color: white;
-            background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop') no-repeat center center fixed;
-            background-size: cover;
             min-height: 100vh;
             overflow: hidden;
-        }
-
-        .blur-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            z-index: -2;
-        }
-
-        .grid-lines {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -1;
-            opacity: 0.5;
         }
 
         .container {
@@ -156,6 +131,7 @@
             background: rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .dot.active {
@@ -240,6 +216,19 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             position: relative;
             z-index: 5;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form.minimized {
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .contact-form.minimized .form-group {
+            opacity: 0;
+            height: 0;
+            margin: 0;
+            overflow: hidden;
         }
 
         .contact-form::before {
@@ -291,6 +280,7 @@
 
         .form-group {
             margin-bottom: 1rem;
+            transition: opacity 0.3s ease;
         }
 
         .form-group label {
@@ -368,7 +358,7 @@
             font-weight: 600;
             cursor: pointer;
             background: rgba(20, 20, 40, 0.8);
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
         }
@@ -401,6 +391,28 @@
             background: var(--neon-blue);
             color: black;
             box-shadow: 0 0 25px rgba(11, 240, 252, 0.6);
+        }
+
+        .restore-form {
+            position: fixed;
+            bottom: 60px;
+            right: 20px;
+            padding: 0.6rem 1rem;
+            border-radius: 50px;
+            background: rgba(20, 20, 40, 0.8);
+            color: var(--neon-yellow);
+            border: 1px solid var(--neon-yellow);
+            z-index: 100;
+            font-size: 0.8rem;
+            font-family: 'Rajdhani', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .restore-form:hover {
+            background: var(--neon-yellow);
+            color: black;
+            box-shadow: 0 0 15px rgba(245, 215, 66, 0.6);
         }
 
         @media (max-width: 1024px) {
@@ -605,41 +617,38 @@
     </style>
 </head>
 <body>
-<div class="blur-bg"></div>
-<div class="grid-lines"></div>
-
 <div class="logo"><span>H</span>ASIRU</div>
 
 <div class="container">
     <nav>
         <div class="nav-links">
-            <a href="index.html" class="nav-link">
+            <a href="index.html" class="nav-link" aria-label="Home Page">
                 <span class="nav-icon">🏠</span>
                 <span class="nav-text">Home</span>
             </a>
-            <a href="projects.html" class="nav-link">
+            <a href="projects.html" class="nav-link" aria-label="View Projects">
                 <span class="nav-icon">📁</span>
                 <span class="nav-text">Projects</span>
             </a>
-            <a href="skills.html" class="nav-link">
+            <a href="skills.html" class="nav-link" aria-label="View Skills">
                 <span class="nav-icon">⚙️</span>
                 <span class="nav-text">Skills</span>
             </a>
-            <a href="experience.html" class="nav-link">
+            <a href="experience.html" class="nav-link" aria-label="View Experience">
                 <span class="nav-icon">🧠</span>
                 <span class="nav-text">Experience</span>
             </a>
-            <a href="contact.html" class="nav-link active">
+            <a href="contact.html" class="nav-link active" aria-label="Contact Me">
                 <span class="nav-icon">✉️</span>
                 <span class="nav-text">Contact</span>
             </a>
         </div>
 
         <div class="nav-dots">
-            <div class="dot active"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
+            <div class="dot active" aria-label="Scroll to Contact Section 1"></div>
+            <div class="dot" aria-label="Scroll to Contact Section 2"></div>
+            <div class="dot" aria-label="Scroll to Contact Section 3"></div>
+            <div class="dot" aria-label="Scroll to Contact Section 4"></div>
         </div>
     </nav>
 
@@ -647,7 +656,7 @@
         <div class="hero">
             <h1>Contact Me</h1>
             <p class="tagline">Get in touch for collaborations, projects, or inquiries</p>
-            <button class="btn btn-primary">Send Message</button>
+            <button class="btn btn-primary" aria-label="Send Message">Send Message</button>
         </div>
 
         <div class="contact-container">
@@ -655,9 +664,9 @@
                 <div class="contact-form-header">
                     <div class="contact-form-title">Send a Message</div>
                     <div class="contact-form-icons">
-                        <div class="contact-form-icon clear"></div>
-                        <div class="contact-form-icon submit"></div>
-                        <div class="contact-form-icon close"></div>
+                        <div class="contact-form-icon clear" aria-label="Clear Form"></div>
+                        <div class="contact-form-icon submit" aria-label="Submit Form"></div>
+                        <div class="contact-form-icon close" aria-label="Close Form"></div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -675,31 +684,41 @@
             </div>
 
             <div class="social-links">
-                <a href="https://linkedin.com" target="_blank" class="social-link">💼</a>
-                <a href="https://github.com" target="_blank" class="social-link">🐙</a>
-                <a href="https://twitter.com" target="_blank" class="social-link">🐦</a>
-                <a href="mailto:example@email.com" class="social-link">✉️</a>
+                <a href="https://linkedin.com" target="_blank" class="social-link" aria-label="Visit LinkedIn Profile">💼</a>
+                <a href="https://github.com" target="_blank" class="social-link" aria-label="Visit GitHub Profile">🐱</a>
+                <a href="https://twitter.com" target="_blank" class="social-link" aria-label="Visit Twitter Profile">🐦</a>
+                <a href="mailto:example@email.com" class="social-link" aria-label="Send Email">✉️</a>
             </div>
         </div>
     </main>
 </div>
 
 <div class="theme-selector">
-    <div class="theme-pill">Progiclad</div>
-    <div class="theme-pill">Aolix</div>
-    <div class="theme-pill active">Foxaloe</div>
+    <div class="theme-pill" aria-label="Select Progiclad Theme">Progiclad</div>
+    <div class="theme-pill" aria-label="Select Aolix Theme">Aolix</div>
+    <div class="theme-pill active" aria-label="Select Foxaloe Theme">Foxaloe</div>
 </div>
 
-<button class="feature-project">Connect Now</button>
+<button class="feature-project" aria-label="Connect Now">Connect Now</button>
+<button class="restore-form" aria-label="Restore Contact Form">Restore Form</button>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Navigation active state
+        // Set active navigation link based on current URL
+        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
         document.querySelectorAll('.nav-link').forEach(link => {
+            const linkPath = link.getAttribute('href');
+            if (linkPath === currentPath) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
                 link.classList.add('active');
+                window.location.href = link.href;
             });
         });
 
@@ -708,17 +727,41 @@
             dot.addEventListener('click', () => {
                 document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
                 dot.classList.add('active');
-                // Scroll to contact section (placeholder)
                 document.querySelector('.contact-container').scrollIntoView({ behavior: 'smooth' });
             });
         });
 
         // Theme selector
+        const themes = {
+            Progiclad: {
+                '--neon-purple': '#ff2e63',
+                '--neon-blue': '#08f7fe',
+                '--neon-yellow': '#f1c40f',
+                '--dark-bg': '#1a1a2e',
+            },
+            Aolix: {
+                '--neon-purple': '#9b59b6',
+                '--neon-blue': '#3498db',
+                '--neon-yellow': '#f1c40f',
+                '--dark-bg': '#162447',
+            },
+            Foxaloe: {
+                '--neon-purple': '#bc13fe',
+                '--neon-blue': '#0ff0fc',
+                '--neon-yellow': '#f5d742',
+                '--dark-bg': '#0a0a12',
+            },
+        };
+
         document.querySelectorAll('.theme-pill').forEach(pill => {
             pill.addEventListener('click', () => {
                 document.querySelectorAll('.theme-pill').forEach(p => p.classList.remove('active'));
                 pill.classList.add('active');
-                // Here you would typically change the theme
+                const theme = pill.textContent;
+                const root = document.documentElement;
+                Object.entries(themes[theme]).forEach(([key, value]) => {
+                    root.style.setProperty(key, value);
+                });
             });
         });
 
@@ -738,38 +781,84 @@
 
         document.querySelector('.contact-form-icon.clear').addEventListener('click', (e) => {
             e.stopPropagation();
-            nameInput.value = '';
-            emailInput.value = '';
-            messageInput.value = '';
+            const button = e.target;
+            button.style.opacity = '0.5';
+            button.disabled = true;
+            setTimeout(() => {
+                nameInput.value = '';
+                emailInput.value = '';
+                messageInput.value = '';
+                button.style.opacity = '1';
+                button.disabled = false;
+            }, 300);
         });
 
         document.querySelector('.contact-form-icon.submit').addEventListener('click', (e) => {
             e.stopPropagation();
-            if (nameInput.value && emailInput.value && messageInput.value) {
-                alert('Message sent successfully!');
-                nameInput.value = '';
-                emailInput.value = '';
-                messageInput.value = '';
-            } else {
-                alert('Please fill out all fields!');
-            }
+            const button = e.target;
+            button.style.opacity = '0.5';
+            button.disabled = true;
+            setTimeout(() => {
+                if (nameInput.value && emailInput.value && messageInput.value) {
+                    alert('Message sent successfully!');
+                    nameInput.value = '';
+                    emailInput.value = '';
+                    messageInput.value = '';
+                } else {
+                    alert('Please fill out all fields!');
+                }
+                button.style.opacity = '1';
+                button.disabled = false;
+            }, 500);
         });
 
         // Send Message button
         document.querySelector('.btn-primary').addEventListener('click', () => {
-            if (nameInput.value && emailInput.value && messageInput.value) {
-                alert('Message sent successfully!');
-                nameInput.value = '';
-                emailInput.value = '';
-                messageInput.value = '';
-            } else {
-                alert('Please fill out all fields!');
-            }
+            const button = document.querySelector('.btn-primary');
+            button.textContent = 'Sending...';
+            button.disabled = true;
+            setTimeout(() => {
+                if (nameInput.value && emailInput.value && messageInput.value) {
+                    alert('Message sent successfully!');
+                    nameInput.value = '';
+                    emailInput.value = '';
+                    messageInput.value = '';
+                } else {
+                    alert('Please fill out all fields!');
+                }
+                button.textContent = 'Send Message';
+                button.disabled = false;
+            }, 500);
         });
 
         // Connect Now button
         document.querySelector('.feature-project').addEventListener('click', () => {
-            alert('This would open a quick connect option!');
+            const button = document.querySelector('.feature-project');
+            button.textContent = 'Loading...';
+            button.disabled = true;
+            setTimeout(() => {
+                form.style.display = 'block';
+                form.style.opacity = '1';
+                form.classList.remove('minimized');
+                form.scrollIntoView({ behavior: 'smooth' });
+                button.textContent = 'Connect Now';
+                button.disabled = false;
+            }, 500);
+        });
+
+        // Restore form button
+        document.querySelector('.restore-form').addEventListener('click', () => {
+            const button = document.querySelector('.restore-form');
+            button.textContent = 'Restoring...';
+            button.disabled = true;
+            setTimeout(() => {
+                form.style.display = 'block';
+                form.style.opacity = '1';
+                form.classList.remove('minimized');
+                form.scrollIntoView({ behavior: 'smooth' });
+                button.textContent = 'Restore Form';
+                button.disabled = false;
+            }, 500);
         });
     });
 </script>
